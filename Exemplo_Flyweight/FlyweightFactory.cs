@@ -21,7 +21,8 @@
             List<string> elements = new List<string>();
 
             // atributo intrínseco (imutável)
-            elements.Add(key.Tipo);
+            elements.Add(key.Imagem);
+
 
             // atributo extrínseco (mutável)
             if (key.Time != null)
@@ -66,28 +67,13 @@
             {
                 Console.WriteLine(flyweight.Item2);
             }
-            Console.WriteLine("\nQue equivalem aos objetos:");
+            Console.WriteLine("\nQue equivalem aos objetos intrínsecos:");
+            Console.WriteLine($"\n       [Imagem]           [Time]  [Atacando]  [PosicaoX]  [PosicaoY]");
             foreach (var flyweight in _flyweight)
             {
                 Console.WriteLine(flyweight.Item1.getKeyItens());
             }
             Unidade.Continue();
-        }
-
-        public static void atualizarTelaJogador(FlyweightFactory factory, Unidade unidade)
-        {
-            Console.WriteLine("_".PadLeft(80, '_'));
-            Console.WriteLine("\nAtualizando unidades na tela do jogador.");
-            Console.WriteLine(unidade.getKeyItens());
-
-            var flyweight = factory.GetFlyweight(new Unidade
-            {
-                Tipo = unidade.Tipo
-                //,Time = unidade.Time
-            });
-
-            // O código do cliente armazena ou calcula o estado extrínseco e passa para os métodos do flyweight.
-            flyweight.Operacao(unidade);
         }
     }
 }

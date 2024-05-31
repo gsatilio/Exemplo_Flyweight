@@ -7,9 +7,9 @@
     {
         private List<Tuple<Flyweight, string>> _flyweight = new List<Tuple<Flyweight, string>>();
 
-        public FlyweightFactory(params Unidade[] tvs)
+        public FlyweightFactory(params Unidade[] unidade)
         {
-            foreach (var elementoAtual in tvs)
+            foreach (var elementoAtual in unidade)
             {
                 _flyweight.Add(new Tuple<Flyweight, string>(new Flyweight(elementoAtual), this.getKey(elementoAtual)));
             }
@@ -20,8 +20,12 @@
         {
             List<string> elements = new List<string>();
 
+            // atributo intrínseco (imutável)
             elements.Add(key.Tipo);
-            elements.Add(key.Time);
+
+            // atributo extrínseco (mutável)
+            if (key.Time != null)
+                elements.Add(key.Time);
             if (key.Atacando != false)
                 elements.Add(key.Atacando.ToString());
             if (key.PosicaoX != 0)
@@ -35,20 +39,20 @@
         }
 
         // Retorna um Flyweight existente ou um novo, a depender do que vier da hash gerada pela getKey
-        public Flyweight GetFlyweight(Unidade tvCompartilhado)
+        public Flyweight GetFlyweight(Unidade unidadeCompartilhado)
         {
-            string key = this.getKey(tvCompartilhado);
+            string key = this.getKey(unidadeCompartilhado);
 
             if (_flyweight.Where(t => t.Item2 == key).Count() == 0)
             {
                 Console.WriteLine("FlyweightFactory: Não foi encontrado um flyweight, criando um novo.");
-                this._flyweight.Add(new Tuple<Flyweight, string>(new Flyweight(tvCompartilhado), key));
-                Console.WriteLine($"Key gerada:   {this.getKey(tvCompartilhado)}");
+                this._flyweight.Add(new Tuple<Flyweight, string>(new Flyweight(unidadeCompartilhado), key));
+                Console.WriteLine($"Key gerada:   {this.getKey(unidadeCompartilhado)}");
             }
             else
             {
                 Console.WriteLine("********** FlyweightFactory: REUTILIZANDO flyweight já criado. **********");
-                Console.WriteLine($"Key Reutilizada:   {this.getKey(tvCompartilhado)}");
+                Console.WriteLine($"Key Reutilizada:   {this.getKey(unidadeCompartilhado)}");
             }
             return this._flyweight.Where(t => t.Item2 == key).FirstOrDefault().Item1;
         }
@@ -68,6 +72,22 @@
                 Console.WriteLine(flyweight.Item1.getKeyItens());
             }
             Unidade.Continue();
+        }
+
+        public static void atualizarTelaJogador(FlyweightFactory factory, Unidade unidade)
+        {
+            Console.WriteLine("_".PadLeft(80, '_'));
+            Console.WriteLine("\nAtualizando unidades na tela do jogador.");
+            Console.WriteLine(unidade.getKeyItens());
+
+            var flyweight = factory.GetFlyweight(new Unidade
+            {
+                Tipo = unidade.Tipo
+                //,Time = unidade.Time
+            });
+
+            // O código do cliente armazena ou calcula o estado extrínseco e passa para os métodos do flyweight.
+            flyweight.Operacao(unidade);
         }
     }
 }

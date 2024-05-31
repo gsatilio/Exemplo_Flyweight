@@ -17,8 +17,8 @@ internal class Program
         // Primeira impressão Flyweight
         factory.listarFlyweights();
 
-        // Inserção de 3 televisores
-        atualizarTelaJogador(factory, new Unidade
+        // Inserção Unidades
+        FlyweightFactory.atualizarTelaJogador(factory, new Unidade
         {
             Tipo = "Barco",
             Time = "azul",
@@ -27,7 +27,7 @@ internal class Program
             PosicaoY = 200
         });
 
-        atualizarTelaJogador(factory, new Unidade
+        FlyweightFactory.atualizarTelaJogador(factory, new Unidade
         {
             Tipo = "Soldado",
             Time = "vermelho",
@@ -36,7 +36,7 @@ internal class Program
             PosicaoY = 325
         });
 
-        atualizarTelaJogador(factory, new Unidade
+        FlyweightFactory.atualizarTelaJogador(factory, new Unidade
         {
             Tipo = "Balista",
             Time = "azul",
@@ -45,7 +45,7 @@ internal class Program
             PosicaoY = 570
         });
 
-        atualizarTelaJogador(factory, new Unidade
+        FlyweightFactory.atualizarTelaJogador(factory, new Unidade
         {
             Tipo = "Arqueiro",
             Time = "azul",
@@ -54,21 +54,34 @@ internal class Program
             PosicaoY = 203
         });
 
-        // Segunda impressão Flyweight
-        factory.listarFlyweights();
-    }
-    public static void atualizarTelaJogador(FlyweightFactory factory, Unidade tv)
-    {
-        Console.WriteLine("_".PadLeft(80, '_'));
-        Console.WriteLine("\nAtualizando unidades na tela do jogador.");
-        Console.WriteLine(tv.getKeyItens());
-
-        var flyweight = factory.GetFlyweight(new Unidade
+        FlyweightFactory.atualizarTelaJogador(factory, new Unidade
         {
-            Tipo = tv.Tipo
+            Tipo = "Barco",
+            Time = "vermelho",
+            Atacando = true,
+            PosicaoX = 100,
+            PosicaoY = 25
         });
 
-        // O código do cliente armazena ou calcula o estado extrínseco e passa para os métodos do flyweight.
-        flyweight.Operacao(tv);
+        FlyweightFactory.atualizarTelaJogador(factory, new Unidade
+        {
+            Tipo = "Elefante",
+            Time = "azul",
+            Atacando = false,
+            PosicaoX = 321,
+            PosicaoY = 79
+        });
+
+        FlyweightFactory.atualizarTelaJogador(factory, new Unidade
+        {
+            Tipo = "Barco",
+            Time = "azul",
+            Atacando = false,
+            PosicaoX = 180,
+            PosicaoY = 200
+        });
+
+        // Segunda impressão Flyweight
+        factory.listarFlyweights();
     }
 }

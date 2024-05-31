@@ -7,9 +7,9 @@
     {
         private Unidade _estadoCompartilhado;
 
-        public Flyweight(Unidade tv)
+        public Flyweight(Unidade unidade)
         {
-            this._estadoCompartilhado = tv;
+            this._estadoCompartilhado = unidade;
         }
 
         public void Operacao(Unidade unico)
